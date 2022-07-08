@@ -74,7 +74,6 @@ Remember to edit and customize all the values like `"CHANGE_ME!"` in the configu
 
 ## Docker compose
 ````
-apt install jq
 pip install docker-compose
 ````
 
@@ -97,9 +96,9 @@ Where the data are
 
 Copy files in destination volumes
 ````
-cp project/pki/*pem `docker volume inspect satosa-saml2saml_certs | jq .[0].Mountpoint | sed 's/"//g'`
-cp -R project/* `docker volume inspect satosa-saml2saml_conf | jq .[0].Mountpoint | sed 's/"//g'`
-cp -R project/static/* `docker volume inspect satosa-saml2saml_statics | jq .[0].Mountpoint | sed 's/"//g'`
+cp project/pki/*pem `docker volume inspect -f '{{.Mountpoint}}' satosa-saml2saml_certs`
+cp -R project/* `docker volume inspect -f '{{.Mountpoint}}' satosa-saml2saml_conf`
+cp -R project/static/* `docker volume inspect -f '{{.Mountpoint}}' satosa-saml2saml_statics`
 ````
 
 Run the stack
